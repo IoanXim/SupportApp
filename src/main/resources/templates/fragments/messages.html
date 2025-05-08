@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Messages</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<div th:fragment="messageList">
+  <div th:each="msg : ${messages}" class="message">
+    <p>
+      <strong th:text="${msg.sender.customer != null ? msg.sender.customer.firstname + ' ' + msg.sender.customer.lastname.substring(0,1) + '.'
+                             : msg.sender.agent.firstname + ' ' + msg.sender.agent.lastname.substring(0,1) + '.'}">Sender</strong>:
+      <span th:text="${msg.content}">Message content</span>
+    </p>
+  </div>
+</div>
+</body>
+</html>

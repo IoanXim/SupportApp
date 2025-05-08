@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Agent Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+<div class="container">
+    <h2 th:text="'Welcome, ' + ${agentName} + '!'">Welcome, Agent!</h2>
+
+    <h3>Your Assigned Products</h3>
+    <ul>
+        <li th:each="product : ${assignedProducts}" th:text="${product.name}">[Product Name]</li>
+    </ul>
+
+    <div th:if="${activeSession}">
+        <h3>Active Session</h3>
+        <p>
+            Customer: <span th:text="${activeSession.customer.firstname} + ' ' + ${activeSession.customer.lastname}">[Customer Name]</span><br>
+            Product: <span th:text="${activeSession.product.name}">[Product Name]</span>
+        </p>
+        <a th:href="@{/session/{id}(id=${activeSession.sessionId})}">Go to Active Session</a>
+    </div>
+
+    <div>
+        <h3>Past Sessions</h3>
+        <ul>
+            <li th:each="s : ${pastSessions}">
+                <a th:href="@{/session/{id}(id=${s.sessionId})}">
+                    Customer: <span th:text="${s.customer.firstname} + ' ' + ${s.customer.lastname}">[Name]</span>,
+                    Product: <span th:text="${s.product.name}">[Product]</span>,
+                    (Started: <span th:text="${#temporals.format(s.startedAt, 'yyyy-MM-dd HH:mm')}"></span> |
+                    Ended: <span th:text="${#temporals.format(s.endedAt, 'yyyy-MM-dd HH:mm')}"></span>)
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
